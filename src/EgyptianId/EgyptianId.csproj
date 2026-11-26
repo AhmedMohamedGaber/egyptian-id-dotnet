@@ -9,17 +9,24 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <PackageId>EgyptianId</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Ahmed Mohamed Gaber</Authors>
     <Description>Offline validation and parsing of the 14-digit Egyptian national ID number (الرقم القومي): birth date, gender and governorate. Accepts Arabic-Indic digits.</Description>
     <PackageTags>egypt;national-id;validation;arabic;mena;dotnet</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/AhmedMohamedGaber/egyptian-id-dotnet</PackageProjectUrl>
+    <PackageReleaseNotes>1.1.0: Age and IsAdult, Masked and Formatted, English governorate names, Parse, DataAnnotations attribute, test ID generator, Arabic digit output, bidi mark cleanup, net6.0 target.</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <DebugType>embedded</DebugType>
+    <Deterministic>true</Deterministic>
     <RepositoryUrl>https://github.com/AhmedMohamedGaber/egyptian-id-dotnet</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="../../assets/icon.png" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>
