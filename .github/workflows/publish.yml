@@ -1,0 +1,39 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # lets GitHub issue the OIDC token for NuGet trusted publishing
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test
+        run: dotnet test tests/EgyptianId.Tests/EgyptianId.Tests.csproj --configuration Release
+
+      - name: Pack
+        run: |
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            dotnet pack src/EgyptianId/EgyptianId.csproj --configuration Release --output artifacts -p:Version="${GITHUB_REF_NAME#v}"
+          else
+            dotnet pack src/EgyptianId/EgyptianId.csproj --configuration Release --output artifacts
+          fi
+
+      - name: NuGet login (OIDC to temporary API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: gaberx
+
+      - name: NuGet push
+        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
