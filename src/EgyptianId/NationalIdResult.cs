@@ -35,6 +35,18 @@ public enum NationalIdError
 /// <param name="BirthGovernorate">Governorate of birth registration.</param>
 public sealed record NationalIdInfo(string Number, DateOnly BirthDate, Gender Gender, Governorate BirthGovernorate)
 {
+    /// <summary>Completed years of age today (UTC).</summary>
+    public int Age => AgeOn(DateOnly.FromDateTime(DateTime.UtcNow));
+
+    /// <summary>True when the person is at least 18 on the given date (default today, UTC).</summary>
+    public bool IsAdult(DateOnly? today = null) => AgeOn(today ?? DateOnly.FromDateTime(DateTime.UtcNow)) >= 18;
+
+    /// <summary>The number with all but the last four digits hidden, safe for logs and screens.</summary>
+    public string Masked => NationalIdFormatter.Mask(Number);
+
+    /// <summary>The number grouped by field: C YYMMDD GG SSSS K.</summary>
+    public string Formatted => NationalIdFormatter.Format(Number);
+
     /// <summary>Completed years of age on the given date.</summary>
     public int AgeOn(DateOnly date)
     {
