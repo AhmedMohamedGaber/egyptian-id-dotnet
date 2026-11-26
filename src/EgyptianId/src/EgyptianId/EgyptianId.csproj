@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <PackageId>EgyptianId</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Ahmed Mohamed Gaber</Authors>
+    <Description>Offline validation and parsing of the 14-digit Egyptian national ID number (الرقم القومي): birth date, gender and governorate. Accepts Arabic-Indic digits.</Description>
+    <PackageTags>egypt;national-id;validation;arabic;mena;dotnet</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/AhmedMohamedGaber/egyptian-id-dotnet</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>
