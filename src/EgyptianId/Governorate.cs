@@ -36,6 +36,13 @@ public enum Governorate : byte
 /// <summary>Display helpers for <see cref="Governorate"/>.</summary>
 public static class GovernorateExtensions
 {
+    /// <summary>Returns the English display name, for example "Kafr El Sheikh".</summary>
+    public static string EnglishName(this Governorate governorate) => governorate switch
+    {
+        Governorate.OutsideRepublic => "Outside Egypt",
+        _ => System.Text.RegularExpressions.Regex.Replace(governorate.ToString(), "(?<=[a-z])(?=[A-Z])", " ")
+    };
+
     /// <summary>Returns the Arabic name of the governorate.</summary>
     public static string ArabicName(this Governorate governorate) => governorate switch
     {
