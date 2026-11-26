@@ -93,10 +93,26 @@ public static class NationalIdValidator
         return info is not null;
     }
 
+    /// <summary>Decodes a number or throws <see cref="FormatException"/> naming the reason it was rejected.</summary>
+    public static NationalIdInfo Parse(string? input, DateOnly? today = null)
+    {
+        var result = Validate(input, today);
+        return result.Info ?? throw new FormatException($"Not a valid Egyptian national ID number: {result.Error}.");
+    }
+
     private static NationalIdResult Fail(NationalIdError error) => new(error, null);
 
-    private static string Normalize(string input)
+    /// <summary>
+    /// Converts Arabic-Indic and Persian digits to ASCII digits and removes spaces, hyphens,
+    /// non-breaking spaces and invisible bidi marks that appear when Arabic text is copied.
+    /// </summary>
+    public static string Normalize(string? input)
     {
+        if (input is null)
+        {
+            return string.Empty;
+        }
+
         var sb = new StringBuilder(input.Length);
 
         foreach (var c in input.Trim())
@@ -109,7 +125,7 @@ public static class NationalIdValidator
             {
                 sb.Append((char)('0' + (c - '\u06F0')));
             }
-            else if (c is ' ' or '-')
+            else if (c is ' ' or '-' or '\u00A0' or '\u200E' or '\u200F' or '\u202A' or '\u202B' or '\u202C')
             {
                 continue;
             }
