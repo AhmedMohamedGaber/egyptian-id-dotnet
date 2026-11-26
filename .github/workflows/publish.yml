@@ -18,6 +18,9 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      - name: Restore package icon
+        run: base64 -d assets/icon.base64 > assets/icon.png
+
       - name: Test
         run: dotnet test tests/EgyptianId.Tests/EgyptianId.Tests.csproj --configuration Release
 
