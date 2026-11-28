@@ -15,19 +15,23 @@
 
 ## الحزم
 
-| الحزمة | ماذا تضيف |
-| --- | --- |
-| [EgyptianId](https://www.nuget.org/packages/EgyptianId) | الأساس: التحقق واستخراج البيانات والعمر والمحافظات والتنسيق ومحوّل JSON ومولّد أرقام للاختبار. بدون أي اعتماديات. |
-| [EgyptianId.AspNetCore](https://www.nuget.org/packages/EgyptianId.AspNetCore) | ربط النماذج في ASP.NET Core: اربط قيمة الطلب مباشرة بكائن `NationalIdInfo` بعد فكّ ترميزه. |
-| [EgyptianId.FluentValidation](https://www.nuget.org/packages/EgyptianId.FluentValidation) | قاعدة `IsValidEgyptianNationalId()` مع رسالة دقيقة ورمز خطأ برمجي لكل سبب رفض. |
+| الحزمة | NuGet | ماذا تضيف |
+| --- | --- | --- |
+| [EgyptianId](https://www.nuget.org/packages/EgyptianId) | [![NuGet](https://img.shields.io/nuget/v/EgyptianId.svg)](https://www.nuget.org/packages/EgyptianId) | الأساس: التحقق واستخراج البيانات والعمر والمحافظات والتنسيق ومحوّل JSON ومولّد أرقام للاختبار. بدون أي اعتماديات. |
+| [EgyptianId.AspNetCore](https://www.nuget.org/packages/EgyptianId.AspNetCore) | [![NuGet](https://img.shields.io/nuget/v/EgyptianId.AspNetCore.svg)](https://www.nuget.org/packages/EgyptianId.AspNetCore) | ربط النماذج في ASP.NET Core: اربط قيمة الطلب مباشرة بكائن `NationalIdInfo` بعد فكّ ترميزه. |
+| [EgyptianId.FluentValidation](https://www.nuget.org/packages/EgyptianId.FluentValidation) | [![NuGet](https://img.shields.io/nuget/v/EgyptianId.FluentValidation.svg)](https://www.nuget.org/packages/EgyptianId.FluentValidation) | قاعدة `IsValidEgyptianNationalId()` مع رسالة دقيقة ورمز خطأ برمجي لكل سبب رفض. |
+
+الحزم الثلاث تدعم .NET 6 و .NET 8.
 
 ## التثبيت
 
 ```bash
-dotnet add package EgyptianId
+dotnet add package EgyptianId                  # الأساس: التحقق واستخراج البيانات
+dotnet add package EgyptianId.AspNetCore       # اختياري: ربط النماذج في ASP.NET Core
+dotnet add package EgyptianId.FluentValidation # اختياري: قاعدة FluentValidation
 ```
 
-صفحة الحزمة: https://www.nuget.org/packages/EgyptianId. تدعم .NET 6 و .NET 8.
+حزمتا التكامل تعتمدان على الأساسية، فأضف فقط ما تستخدمه.
 
 ## البداية السريعة
 
