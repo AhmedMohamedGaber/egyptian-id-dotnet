@@ -16,8 +16,8 @@ Give it a number. Get back the birth date, gender and governorate, or the exact 
 | Package | What it adds |
 | --- | --- |
 | [EgyptianId](https://www.nuget.org/packages/EgyptianId) | The core: validation, parsing, age, governorates, formatting, JSON converter, test-number generator. Zero dependencies. |
-| EgyptianId.AspNetCore | Model binding for controllers and minimal APIs: bind a request value straight to a decoded `NationalIdInfo`. |
-| EgyptianId.FluentValidation | `IsValidEgyptianNationalId()` rule with a precise message and machine-readable error code per failure. |
+| [EgyptianId.AspNetCore](https://www.nuget.org/packages/EgyptianId.AspNetCore) | Model binding for controllers and minimal APIs: bind a request value straight to a decoded `NationalIdInfo`. |
+| [EgyptianId.FluentValidation](https://www.nuget.org/packages/EgyptianId.FluentValidation) | `IsValidEgyptianNationalId()` rule with a precise message and machine-readable error code per failure. |
 
 ## Install
 
