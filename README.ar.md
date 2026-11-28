@@ -18,8 +18,8 @@
 | الحزمة | ماذا تضيف |
 | --- | --- |
 | [EgyptianId](https://www.nuget.org/packages/EgyptianId) | الأساس: التحقق واستخراج البيانات والعمر والمحافظات والتنسيق ومحوّل JSON ومولّد أرقام للاختبار. بدون أي اعتماديات. |
-| EgyptianId.AspNetCore | ربط النماذج في ASP.NET Core: اربط قيمة الطلب مباشرة بكائن `NationalIdInfo` بعد فكّ ترميزه. |
-| EgyptianId.FluentValidation | قاعدة `IsValidEgyptianNationalId()` مع رسالة دقيقة ورمز خطأ برمجي لكل سبب رفض. |
+| [EgyptianId.AspNetCore](https://www.nuget.org/packages/EgyptianId.AspNetCore) | ربط النماذج في ASP.NET Core: اربط قيمة الطلب مباشرة بكائن `NationalIdInfo` بعد فكّ ترميزه. |
+| [EgyptianId.FluentValidation](https://www.nuget.org/packages/EgyptianId.FluentValidation) | قاعدة `IsValidEgyptianNationalId()` مع رسالة دقيقة ورمز خطأ برمجي لكل سبب رفض. |
 
 ## التثبيت
 
