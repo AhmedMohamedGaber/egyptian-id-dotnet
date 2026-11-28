@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <PackageId>EgyptianId.FluentValidation</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Ahmed Mohamed Gaber</Authors>
+    <Description>FluentValidation rule for the 14-digit Egyptian national ID number. One call adds a precise, per-reason error message and a machine-readable error code.</Description>
+    <PackageTags>egypt;national-id;validation;fluentvalidation;dotnet</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/AhmedMohamedGaber/egyptian-id-dotnet</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/AhmedMohamedGaber/egyptian-id-dotnet</RepositoryUrl>
+    <DebugType>embedded</DebugType>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <ProjectReference Include="../EgyptianId/EgyptianId.csproj" />
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>

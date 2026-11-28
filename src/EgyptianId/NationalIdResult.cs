@@ -1,3 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+
 namespace EgyptianId;
 
 /// <summary>Why a national ID number was rejected.</summary>
@@ -33,6 +36,7 @@ public enum NationalIdError
 /// <param name="BirthDate">Date of birth.</param>
 /// <param name="Gender">Gender from digit 13.</param>
 /// <param name="BirthGovernorate">Governorate of birth registration.</param>
+[JsonConverter(typeof(NationalIdInfoJsonConverter))]
 public sealed record NationalIdInfo(string Number, DateOnly BirthDate, Gender Gender, Governorate BirthGovernorate)
 {
     /// <summary>Completed years of age today (UTC).</summary>
@@ -58,6 +62,13 @@ public sealed record NationalIdInfo(string Number, DateOnly BirthDate, Gender Ge
 
         return age;
     }
+
+    /// <summary>
+    /// Parses a national ID number. This signature lets ASP.NET Core minimal APIs bind
+    /// <see cref="NationalIdInfo"/> directly from route and query strings with no setup.
+    /// </summary>
+    public static bool TryParse(string? value, [NotNullWhen(true)] out NationalIdInfo? info) =>
+        NationalIdValidator.TryParse(value, out info);
 }
 
 /// <summary>Outcome of validating a national ID number.</summary>

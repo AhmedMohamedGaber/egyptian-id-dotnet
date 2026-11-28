@@ -22,15 +22,10 @@ jobs:
         run: base64 -d assets/icon.base64 > assets/icon.png
 
       - name: Test
-        run: dotnet test tests/EgyptianId.Tests/EgyptianId.Tests.csproj --configuration Release
+        run: dotnet test EgyptianId.sln --configuration Release
 
-      - name: Pack
-        run: |
-          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
-            dotnet pack src/EgyptianId/EgyptianId.csproj --configuration Release --output artifacts -p:Version="${GITHUB_REF_NAME#v}"
-          else
-            dotnet pack src/EgyptianId/EgyptianId.csproj --configuration Release --output artifacts
-          fi
+      - name: Pack (versions come from each csproj)
+        run: dotnet pack EgyptianId.sln --configuration Release --output artifacts
 
       - name: NuGet login (OIDC to temporary API key)
         uses: NuGet/login@v1
