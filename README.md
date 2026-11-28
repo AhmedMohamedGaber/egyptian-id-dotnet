@@ -1,5 +1,7 @@
 # EgyptianId
 
+**English** · [العربية](README.ar.md)
+
 [![NuGet](https://img.shields.io/nuget/v/EgyptianId.svg)](https://www.nuget.org/packages/EgyptianId)
 [![Downloads](https://img.shields.io/nuget/dt/EgyptianId.svg)](https://www.nuget.org/packages/EgyptianId)
 [![CI](https://github.com/AhmedMohamedGaber/egyptian-id-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/AhmedMohamedGaber/egyptian-id-dotnet/actions/workflows/ci.yml)
@@ -8,6 +10,14 @@
 Offline validation and parsing of the 14-digit Egyptian national ID number (الرقم القومي) for .NET.
 
 Give it a number. Get back the birth date, gender and governorate, or the exact reason it was rejected. No network calls, no dependencies.
+
+## Packages
+
+| Package | What it adds |
+| --- | --- |
+| [EgyptianId](https://www.nuget.org/packages/EgyptianId) | The core: validation, parsing, age, governorates, formatting, JSON converter, test-number generator. Zero dependencies. |
+| EgyptianId.AspNetCore | Model binding for controllers and minimal APIs: bind a request value straight to a decoded `NationalIdInfo`. |
+| EgyptianId.FluentValidation | `IsValidEgyptianNationalId()` rule with a precise message and machine-readable error code per failure. |
 
 ## Install
 
@@ -49,9 +59,12 @@ else
 - **Decoded data.** Birth date, gender, governorate (Arabic and English names), age on any date, `IsAdult`.
 - **Safe to log.** `Masked` hides all but the last four digits.
 - **Validation attribute.** `[EgyptianNationalId]` for ASP.NET, Blazor and any DataAnnotations model.
+- **ASP.NET Core model binding.** Controllers and minimal APIs can take `NationalIdInfo` directly.
+- **FluentValidation rule.** One call, precise messages, error codes you can localize.
+- **System.Text.Json built in.** `NationalIdInfo` round-trips as the plain 14-digit string, no setup.
 - **Test data generator.** `NationalIdGenerator` makes valid random numbers, repeatable with a seed.
 - **Output helpers.** `NationalIdFormatter.ToArabicIndicDigits`, `Mask`, `Format`.
-- **Tested.** Unit tests cover every error, leap days, age edges, Arabic input and the generator. CI runs on every push.
+- **Tested.** Unit tests cover every error, leap days, age edges, Arabic input, the generator and every integration. CI runs on every push.
 
 ## ASP.NET and DataAnnotations
 
@@ -65,6 +78,57 @@ public class RegisterRequest
 ```
 
 Null and empty values pass the attribute, so add `[Required]` when the field is mandatory.
+
+## ASP.NET Core model binding
+
+Package `EgyptianId.AspNetCore`.
+
+```csharp
+builder.Services.AddControllers(options => options.AddEgyptianId());
+```
+
+Now an action can take the decoded value directly. An invalid number lands in `ModelState` with the exact reason, and `[ApiController]` turns that into an automatic 400:
+
+```csharp
+[HttpGet("/citizens/{id}")]
+public IActionResult Get(NationalIdInfo id)
+{
+    return Ok(new { id.BirthDate, id.BirthGovernorate, age = id.Age });
+}
+```
+
+Minimal APIs need no setup at all: `NationalIdInfo` implements the `TryParse` shape that minimal APIs bind from route and query strings.
+
+```csharp
+app.MapGet("/citizens/{id}", (NationalIdInfo id) => Results.Ok(id.Age));
+```
+
+## FluentValidation
+
+Package `EgyptianId.FluentValidation`.
+
+```csharp
+using FluentValidation;
+
+public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
+{
+    public RegisterRequestValidator()
+    {
+        RuleFor(x => x.NationalId).NotEmpty().IsValidEgyptianNationalId();
+    }
+}
+```
+
+Each failure message names the exact reason ("must be exactly 14 digits", "has an unknown governorate code", ...) and `ErrorCode` carries the `NationalIdError` name, so an Arabic UI can map codes to its own wording. Pass `allowNullOrEmpty: true` for optional fields.
+
+## JSON
+
+No setup. `NationalIdInfo` carries its converter, so `System.Text.Json` serializes it as the 14-digit string and reads it back, validated:
+
+```csharp
+var json = JsonSerializer.Serialize(info);                    // "29902140100115"
+var back = JsonSerializer.Deserialize<NationalIdInfo>(json);  // throws JsonException when invalid
+```
 
 ## Generate test numbers
 
@@ -95,16 +159,19 @@ These numbers are random. They are not issued to anyone.
 
 - `NationalIdValidator.Validate(string?, DateOnly? today = null)` returns `NationalIdResult` (`IsValid`, `Error`, `Info`).
 - `NationalIdValidator.IsValid`, `TryParse`, `Parse` (throws `FormatException`), `Normalize`.
-- `NationalIdInfo`: `Number`, `BirthDate`, `Gender`, `BirthGovernorate`, `Age`, `AgeOn(DateOnly)`, `IsAdult(DateOnly?)`, `Masked`, `Formatted`.
+- `NationalIdInfo`: `Number`, `BirthDate`, `Gender`, `BirthGovernorate`, `Age`, `AgeOn(DateOnly)`, `IsAdult(DateOnly?)`, `Masked`, `Formatted`, plus `NationalIdInfo.TryParse` for minimal API binding.
 - `Governorate.ArabicName()`, `Governorate.EnglishName()`.
 - `NationalIdFormatter.Mask`, `Format`, `ToArabicIndicDigits`.
 - `NationalIdGenerator.Generate`.
 - `EgyptianNationalIdAttribute`.
+- `NationalIdInfoJsonConverter` (already registered on `NationalIdInfo`).
+- `EgyptianId.AspNetCore`: `NationalIdInfoModelBinder`, `NationalIdInfoModelBinderProvider`, `MvcOptions.AddEgyptianId()`.
+- `EgyptianId.FluentValidation`: `IsValidEgyptianNationalId(allowNullOrEmpty: false)`.
 
 ## Build and test
 
 ```bash
-dotnet test tests/EgyptianId.Tests/EgyptianId.Tests.csproj
+dotnet test EgyptianId.sln
 ```
 
 ## Contributing
