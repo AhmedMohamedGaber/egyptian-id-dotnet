@@ -13,19 +13,23 @@ Give it a number. Get back the birth date, gender and governorate, or the exact 
 
 ## Packages
 
-| Package | What it adds |
-| --- | --- |
-| [EgyptianId](https://www.nuget.org/packages/EgyptianId) | The core: validation, parsing, age, governorates, formatting, JSON converter, test-number generator. Zero dependencies. |
-| [EgyptianId.AspNetCore](https://www.nuget.org/packages/EgyptianId.AspNetCore) | Model binding for controllers and minimal APIs: bind a request value straight to a decoded `NationalIdInfo`. |
-| [EgyptianId.FluentValidation](https://www.nuget.org/packages/EgyptianId.FluentValidation) | `IsValidEgyptianNationalId()` rule with a precise message and machine-readable error code per failure. |
+| Package | NuGet | What it adds |
+| --- | --- | --- |
+| [EgyptianId](https://www.nuget.org/packages/EgyptianId) | [![NuGet](https://img.shields.io/nuget/v/EgyptianId.svg)](https://www.nuget.org/packages/EgyptianId) | The core: validation, parsing, age, governorates, formatting, JSON converter, test-number generator. Zero dependencies. |
+| [EgyptianId.AspNetCore](https://www.nuget.org/packages/EgyptianId.AspNetCore) | [![NuGet](https://img.shields.io/nuget/v/EgyptianId.AspNetCore.svg)](https://www.nuget.org/packages/EgyptianId.AspNetCore) | Model binding for controllers and minimal APIs: bind a request value straight to a decoded `NationalIdInfo`. |
+| [EgyptianId.FluentValidation](https://www.nuget.org/packages/EgyptianId.FluentValidation) | [![NuGet](https://img.shields.io/nuget/v/EgyptianId.FluentValidation.svg)](https://www.nuget.org/packages/EgyptianId.FluentValidation) | `IsValidEgyptianNationalId()` rule with a precise message and machine-readable error code per failure. |
+
+All three target .NET 6 and .NET 8.
 
 ## Install
 
 ```bash
-dotnet add package EgyptianId
+dotnet add package EgyptianId                  # core: validation and parsing
+dotnet add package EgyptianId.AspNetCore       # optional: ASP.NET Core model binding
+dotnet add package EgyptianId.FluentValidation # optional: FluentValidation rule
 ```
 
-Package page: https://www.nuget.org/packages/EgyptianId. Targets .NET 6 and .NET 8.
+The integration packages depend on the core, so add only what you use.
 
 ## Quick start
 
