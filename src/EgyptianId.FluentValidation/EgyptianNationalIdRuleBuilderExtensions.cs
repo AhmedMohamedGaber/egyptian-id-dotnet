@@ -36,7 +36,7 @@ public static class EgyptianNationalIdRuleBuilderExtensions
             if (!result.IsValid)
             {
                 var message = MessageFor(result.Error).Replace("{PropertyName}", context.DisplayName, StringComparison.Ordinal);
-                context.AddFailure(new ValidationFailure(context.PropertyName, message, value)
+                context.AddFailure(new ValidationFailure(context.PropertyPath, message, value)
                 {
                     ErrorCode = result.Error.ToString()
                 });
